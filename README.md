@@ -29,3 +29,11 @@ make compare
 
 - If GPU MSM time is not less than 20 milliseconds, it is much longer than CPU time.
 - If GPU MSM time is less than 20 milliseconds, it is much faster than CPU time.
+
+# Hardware
+
+- GPU: NVIDIA GeForce RTX 4090
+- CPU: AMD EPYC 7773X 64-Core Processor
+- CUDA: 12.8
+- go: 1.25.5 linux/amd64
+- gcc: 13.3.0
