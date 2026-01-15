@@ -1,6 +1,6 @@
 # Test Icicle MSM time
 
-The ICICLE GPU MSM time is not stable as for $2^20$ elements:
+The ICICLE GPU MSM time is not stable. For example for $2^{20}$ elements:
 
 - sometime the MSM time is about 6~7 seconds
 - sometime the MSM time is less than 20 milliseconds
