@@ -1,2 +1,18 @@
+# ICICLE libraries (downloaded/built)
 lib/
+lib-v392/
+
+# Compiled binaries
 msm_binary
+msm_bench_*
+*.exe
+
+# Profiling files
+*.nsys-rep
+*.sqlite
+*.qdrep
+
+# Build artifacts
+*.o
+*.so
+*.a

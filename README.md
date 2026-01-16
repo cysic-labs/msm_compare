@@ -23,6 +23,52 @@ The v3 GPU MSM time is highly unstable due to low GPU utilization (~17% SM usage
 
 See `GPU_TIMING_ANALYSIS.md` for detailed investigation.
 
+## ICICLE v3 Instability Investigation
+
+We tested multiple solutions to stabilize ICICLE v3 MSM timing:
+
+| # | Solution | Status | Result |
+|---|----------|--------|--------|
+| 1 | Lock GPU clocks via nvidia-smi | FAILED | Still 5-6s even with clocks locked at max |
+| 2 | CUDA Exclusive Process Mode | PARTIAL | Improved to 17-100ms but not stable |
+| 3 | MSM Config tuning (C=10) | PARTIAL | 48-199ms (~4x variance vs 300x default) |
+| 4 | GPU warmup kernel before MSM | FAILED | Made it consistently slow (5-6s) |
+| 5 | Persistent GPU kernel | SKIPPED | Same approach as warmup |
+| 6 | Async stream priority | SKIPPED | Not exposed in ICICLE v3 API |
+| 7 | CUDA MPS (Multi-Process Service) | FAILED | Still 6-7s with MPS enabled |
+| 8 | **Upgrade to ICICLE v3.9.2** | **BEST v3** | **16-350ms** (10x better than v3.2.2) |
+
+### Why ICICLE v2 is Stable
+
+| Aspect | ICICLE v2 | ICICLE v3 |
+|--------|-----------|-----------|
+| CUDA access | Direct runtime (`libcudart`) | Backend abstraction layer |
+| Library count | 2 libs | 6 libs |
+| Backend loading | Compile-time | Runtime dynamic loading |
+| MSM time (2^20) | **17-20ms stable** | 20ms-6s unstable |
+| Variance | ~8x | ~300x |
+
+The v3 backend abstraction layer (`runtime.LoadBackendFromEnvOrDefault()`) introduces timing instability that cannot be fixed from the application side.
+
+### Recommended Solutions
+
+**Option 1: Use ICICLE v2 (Most Stable)**
+```bash
+make icicle-v2-large  # Stable ~18ms MSM
+```
+
+**Option 2: Upgrade to ICICLE v3.9.2**
+- Reduces variance from 300x to ~20x (16-350ms)
+- Requires license server connection
+- Build from source or use prebuilt backend libs
+
+**Option 3: Use v3.2.2 with C=10 config**
+```go
+cfg := core.GetDefaultMSMConfig()
+cfg.C = 10  // Set window bitsize
+```
+- Reduces variance from 300x to ~4x
+
 ## Quick Start
 
 ### ICICLE v2 (Recommended)
