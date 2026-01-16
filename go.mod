@@ -4,9 +4,12 @@ go 1.24.9
 
 // replace github.com/consensys/gnark => ../external/gnark
 
+replace github.com/ingonyama-zk/icicle/v2 => /home/cysic/coding/plonky/icicle
+
 require (
 	github.com/consensys/gnark-crypto v0.12.1
 	github.com/ingonyama-zk/icicle-gnark/v3 v3.2.2
+	github.com/ingonyama-zk/icicle/v2 v2.0.0
 )
 
 require (
