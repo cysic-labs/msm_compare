@@ -9,6 +9,8 @@ github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSs
 github.com/google/subcommands v1.2.0/go.mod h1:ZjhPrFU+Olkh9WazFPsl27BQ4UPiG37m3yTrtFlrHVk=
 github.com/ingonyama-zk/icicle-gnark/v3 v3.2.2 h1:B+aWVgAx+GlFLhtYjIaF0uGjU3rzpl99Wf9wZWt+Mq8=
 github.com/ingonyama-zk/icicle-gnark/v3 v3.2.2/go.mod h1:CH/cwcr21pPWH+9GtK/PFaa4OGTv4CtfkCKro6GpbRE=
+github.com/ingonyama-zk/icicle/v3 v3.9.2 h1:Id5ukkx32PsVnecfYjbcBPqXVJ1ptcWk/VTmWLvTDBk=
+github.com/ingonyama-zk/icicle/v3 v3.9.2/go.mod h1:e0JHb27/P6WorCJS3YolbY5XffS4PGBuoW38OthLkDs=
 github.com/leanovate/gopter v0.2.9 h1:fQjYxZaynp97ozCzfOyOuAGOU4aU/z37zf/tOujFk7c=
 github.com/leanovate/gopter v0.2.9/go.mod h1:U2L/78B+KVFIx2VmW6onHJQzXtFb+p5y3y2Sh+Jxxv8=
 github.com/mmcloughlin/addchain v0.4.0 h1:SobOdjm2xLj1KkXN5/n0xTIWyZA2+s99UCY1iPfkHRY=

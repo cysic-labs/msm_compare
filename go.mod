@@ -10,6 +10,7 @@ require (
 	github.com/consensys/gnark-crypto v0.12.1
 	github.com/ingonyama-zk/icicle-gnark/v3 v3.2.2
 	github.com/ingonyama-zk/icicle/v2 v2.0.0
+	github.com/ingonyama-zk/icicle/v3 v3.9.2
 )
 
 require (
