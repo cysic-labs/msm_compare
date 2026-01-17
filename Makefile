@@ -16,24 +16,29 @@ V3_CGO_LDFLAGS=-L$(V3_LIB) -L$(V3_BACKEND) -licicle_field_bn254 -licicle_curve_b
 V2_CGO_CFLAGS=-I/usr/local/cuda/include -I$(V2_INCLUDE)
 V2_CGO_LDFLAGS=-L$(V2_LIB) -licicle_field_bn254 -licicle_curve_bn254 -lstdc++ -lcudart -L/usr/local/cuda/lib64
 
-.PHONY: help icicle-small icicle-medium icicle-large icicle-v2-small icicle-v2-medium icicle-v2-large compare clean lib
+.PHONY: help icicle-small icicle-medium icicle-large icicle-v2-small icicle-v2-medium icicle-v2-large ntt-v2-small ntt-v2-medium ntt-v2-large compare clean lib
 
 help:
-	@echo "ICICLE MSM Benchmark"
+	@echo "ICICLE MSM/NTT Benchmark"
 	@echo ""
 	@echo "Setup:"
 	@echo "  make lib             - Download ICICLE v3 libraries (required for v3 tests)"
 	@echo "  make clean           - Clear Go build cache"
 	@echo ""
-	@echo "ICICLE v3 (unstable - has timing issues):"
+	@echo "ICICLE v3 MSM (unstable - has timing issues):"
 	@echo "  make icicle-small    - v3 MSM 2^7 = 128 elements"
 	@echo "  make icicle-medium   - v3 MSM 2^15 = 32K elements"
 	@echo "  make icicle-large    - v3 MSM 2^20 = 1M elements"
 	@echo ""
-	@echo "ICICLE v2 (stable - recommended):"
+	@echo "ICICLE v2 MSM (stable - recommended):"
 	@echo "  make icicle-v2-small  - v2 MSM 2^7 = 128 elements"
 	@echo "  make icicle-v2-medium - v2 MSM 2^15 = 32K elements"
 	@echo "  make icicle-v2-large  - v2 MSM 2^20 = 1M elements"
+	@echo ""
+	@echo "ICICLE v2 NTT (GPU vs CPU comparison):"
+	@echo "  make ntt-v2-small    - v2 NTT 2^18 = 256K elements"
+	@echo "  make ntt-v2-medium   - v2 NTT 2^20 = 1M elements"
+	@echo "  make ntt-v2-large    - v2 NTT 2^22 = 4M elements"
 	@echo ""
 	@echo "Comparison:"
 	@echo "  make compare         - CPU vs GPU comparison (v3)"
@@ -77,6 +82,22 @@ compare:
 
 clean:
 	go clean -cache
+
+# ICICLE v2 NTT targets (GPU vs CPU comparison)
+ntt-v2-small:
+	CGO_CFLAGS="$(V2_CGO_CFLAGS)" \
+	CGO_LDFLAGS="$(V2_CGO_LDFLAGS)" \
+	go run -tags=icicle ntt_v2_benchmark.go -size 18 -runs 5
+
+ntt-v2-medium:
+	CGO_CFLAGS="$(V2_CGO_CFLAGS)" \
+	CGO_LDFLAGS="$(V2_CGO_LDFLAGS)" \
+	go run -tags=icicle ntt_v2_benchmark.go -size 20 -runs 5
+
+ntt-v2-large:
+	CGO_CFLAGS="$(V2_CGO_CFLAGS)" \
+	CGO_LDFLAGS="$(V2_CGO_LDFLAGS)" \
+	go run -tags=icicle ntt_v2_benchmark.go -size 22 -runs 5
 
 lib:
 	mkdir -p lib/backend
