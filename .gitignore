@@ -1,6 +1,7 @@
 # ICICLE libraries (downloaded/built)
 lib/
 lib-v392/
+results/
 
 # Compiled binaries
 msm_binary
